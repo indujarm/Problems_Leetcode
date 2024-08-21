@@ -1,0 +1,32 @@
+https://leetcode.com/problems/koko-eating-bananas/
+
+class Solution {
+    public int minEatingSpeed(int[] p, int h) {
+       int miin = 1;
+       int maax = 0;
+       for(int i : p)
+       {
+         maax=Math.max(maax,i);
+       } 
+       while(miin < maax)
+       {
+        int mid = miin + (maax - miin )/2;
+        if(find(p,h,mid)){
+            maax = mid;
+        }
+        else{
+            miin = mid+1;
+        }
+       }
+       return maax;
+}
+public boolean find(int [] p , int h , int mid)
+{
+    int sum=0;
+    for(int i =0;i<p.length;i++)
+    {
+        sum+= (int)Math.ceil((double)p[i]/mid);
+    }
+    return sum<=h;
+}
+}
