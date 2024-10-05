@@ -1,0 +1,22 @@
+https://leetcode.com/problems/unique-number-of-occurrences/
+
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+        map<int,int> m;
+        for(int i : arr)
+        {
+            m[i]++;
+        }
+    multiset<int>ms;
+     for(auto &it : m){
+            int freq = it.second; // it.second contains frequency & it.first contains number
+            if(ms.find(freq) != ms.end()){
+                // we have found duplicate frequency in set
+                return false;
+            }
+            ms.insert(freq);// insert in set as previously it wasn't in set
+        }
+        return true;    
+    }
+};
