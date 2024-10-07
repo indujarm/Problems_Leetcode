@@ -1,5 +1,7 @@
 Sliding window technique
 
+https://leetcode.com/problems/maximum-average-subarray-i/description/
+
 class Solution {
 public:
     double findMaxAverage(vector<int>& nums, int k) {
