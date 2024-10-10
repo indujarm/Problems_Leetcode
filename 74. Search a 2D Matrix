@@ -1,0 +1,77 @@
+https://leetcode.com/problems/search-a-2d-matrix/
+
+class Solution {
+    public boolean searchMatrix(int[][] arr, int target) {
+        int row = arr.length;
+        int col = arr[0].length;
+        int ans[];
+
+        if(row == 1) {
+            ans = binary(arr, 0, 0, col - 1, target);
+            return ans[0] != -1; // Check if found
+        }
+
+        int rS = 0;
+        int rE = row - 1;
+        int cM = col / 2;
+
+        // Find the row region where the target could be
+        while (rS < rE - 1) { // Avoid overlapping with rE
+            int rM = rS + (rE - rS) / 2;
+            if (arr[rM][cM] == target) {
+                return true;
+            } else if (arr[rM][cM] < target) {
+                rS = rM;
+            } else {
+                rE = rM;
+            }
+        }
+
+        // Check the middle column in the two potential rows
+        if (arr[rS][cM] == target) {
+            return true;
+        }
+        if (rS + 1 < row && arr[rS + 1][cM] == target) { // Ensure rS+1 doesn't go out of bounds
+            return true;
+        }
+
+        // Now we need to search in the four quadrants around rS and rS + 1
+        // Quadrant 1: Left half of rS
+        if (cM - 1 >= 0 && target <= arr[rS][cM - 1]) {
+            ans = binary(arr, rS, 0, cM - 1, target);
+        }
+        // Quadrant 2: Right half of rS
+        else if (cM + 1 < col && target >= arr[rS][cM + 1] && target <= arr[rS][col - 1]) {
+            ans = binary(arr, rS, cM + 1, col - 1, target);
+        }
+        // Quadrant 3: Left half of rS + 1
+        else if (rS + 1 < row && cM - 1 >= 0 && target <= arr[rS + 1][cM - 1]) {
+            ans = binary(arr, rS + 1, 0, cM - 1, target);
+        }
+        // Quadrant 4: Right half of rS + 1
+        else if (rS + 1 < row && cM + 1 < col) {
+            ans = binary(arr, rS + 1, cM + 1, col - 1, target);
+        } else {
+            return false;
+        }
+
+        return ans[0] != -1; // Check if found
+    }
+
+    // Binary search within a row
+    public int[] binary(int[][] arr, int rS, int cS, int cE, int target) {
+        while (cS <= cE) {
+            int cM = cS + (cE - cS) / 2;
+            if (arr[rS][cM] == target) {
+                return new int[] {rS, cM}; // Return row and column if found
+            } else if (arr[rS][cM] < target) {
+                cS = cM + 1; // Move right
+            } else {
+                cE = cM - 1; // Move left
+            }
+        }
+        return new int[] {-1, -1}; // Return not found
+    }
+}
+
+
