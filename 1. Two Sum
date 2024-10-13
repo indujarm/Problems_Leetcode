@@ -1,0 +1,20 @@
+https://leetcode.com/problems/two-sum/
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int n= nums.size();
+        for(int i =1;i<n;i++)
+        {
+            for(int j=i;j<n;j++)
+            {
+                if(nums[j]+nums[j-i]==target)
+                {
+                    return {j,j-i};
+                }
+            }
+        }
+        return {};
+        
+    }
+};
