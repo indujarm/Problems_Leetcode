@@ -1,0 +1,26 @@
+https://leetcode.com/problems/reverse-integer/
+
+class Solution {
+public:
+    int reverse(int x) {
+        bool isNegative = (x<0);
+        x= abs(x);
+        int sum =0;
+        while(x>0)
+        {
+            int val = x%10;
+            x/=10; 
+            if(sum >(INT_MAX - val)/10)
+            {
+                return 0;
+            }
+            
+            sum=sum*10+val;
+        }
+        if(isNegative)
+        sum = -sum;
+
+        return sum;
+        
+    }
+};
